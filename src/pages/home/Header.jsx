@@ -7,7 +7,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { Children } from "react";
+import React, { Children, useEffect } from "react";
 import { NAVBAR_HEIGHT } from "./constants";
 import useScrollPosition from "../../hooks/useScrollPosition";
 import { navbarContent } from "../../utils/content";
@@ -17,6 +17,9 @@ import LanguageIcon from "@mui/icons-material/Language";
 import LaunchButton from "../../components/Buttons/LaunchButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsloggIn, SET_LOGIN } from "../../redux/features/auth/authSlice";
+import { isUserLogin } from "../../redux/features/auth/authService";
 
 const { Logo } = navbarContent;
 
@@ -38,6 +41,25 @@ const LinkButton = ({ children, ...props }) => (
 
 const Navbar = () => {
   const scrollPosition = useScrollPosition();
+  const isLogin = useSelector(selectIsloggIn)
+  const dispatch = useDispatch()
+
+  // Login Status
+  const loginStatus = async () => {
+    try {
+      const data = await isUserLogin(); // Fetch the login status
+      console.log(data);
+      
+      dispatch(SET_LOGIN(data)); // Dispatch the login status to the store
+    } catch (error) {
+      console.error("Error checking login status:", error); // Handle any errors
+    }
+  };
+
+  useEffect(()=>{
+    loginStatus()
+  },[dispatch])
+
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -118,15 +140,24 @@ const Navbar = () => {
             </IconButton>
           ) : (
             <Stack direction="row" spacing={5} alignItems="center">
-              <Link to='register'>
-                <LinkButton spacing={1}>
-                    <LanguageIcon fontSize="small" />
-                    <Typography variant="body2">Register</Typography>
-                </LinkButton>
-              </Link>
+              {!isLogin ?(
+                <>
+                <Link to='login'>
+                  <LinkButton spacing={1}>
+                      <Typography variant="body2">Login</Typography>
+                  </LinkButton>
+                </Link>
+                <Link to='register'>
+                  <LinkButton spacing={1}>
+                      <LanguageIcon fontSize="small" />
+                      <Typography variant="body2">Register</Typography>
+                  </LinkButton>
+                </Link>
+              </>) : (
             <Link to="/dashboard">
               <LaunchButton sx={{ borderRadius: 3 }} />
             </Link>
+              )}
             </Stack>
           )}
         </Stack>

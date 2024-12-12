@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaMoon, FaSun } from 'react-icons/fa'
 import { RiMenuFold2Fill, RiMenuLine } from 'react-icons/ri'
+import Logout from '../authPages/Logout'
 
 const DashNavBar = ({darkMode, toggleDarkMode,toggleSideBar, isSideBarOpen}) => {
   return (
@@ -13,9 +14,9 @@ const DashNavBar = ({darkMode, toggleDarkMode,toggleSideBar, isSideBarOpen}) => 
             <button onClick={toggleDarkMode} className=''>
                 {darkMode? <FaSun /> : <FaMoon />}
             </button>
-
+            <Logout />
         </div>
-      
+     
     </div>
   )
 }

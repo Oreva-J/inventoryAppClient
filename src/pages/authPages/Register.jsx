@@ -2,15 +2,21 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Button, Card, CardActions, CardContent, CardHeader, FilledInput, FormControl, IconButton, InputAdornment, InputLabel, Paper, Skeleton, Stack, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import Password from '../../components/inputs/Password';
-import { Link } from 'react-router-dom';
-import { registerUser } from '../../redux/features/auth/authService';
+import { Link, useNavigate } from 'react-router-dom';
+import { checkMail, registerUser } from '../../redux/features/auth/authService';
 import { toast } from "react-toastify"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { SET_LOGIN, SET_NAME, SET_USER } from '../../redux/features/auth/authSlice';
+import { useDispatch } from 'react-redux'
+import Spinner from '../../components/Spinner';
+
 
 const Register = () => {
-
         const [userData, setUserData] = useState({ name:"", email: "", password:"", confirmPassword:"" })
+        const [isLoading, setIsLoading] = useState(false)
+        const dispatch = useDispatch()
+        const navigate = useNavigate()
 
         const handleFormChange = (event)=>{
             const { name, value} = event.target
@@ -19,18 +25,36 @@ const Register = () => {
             
         }
 
-        const handleSubmit = (e)=>{
+        const handleSubmit = async (e)=>{
             e.preventDefault()
-            console.log("in handle submit", userData);
+            setIsLoading(true)
+            if(userData.password !== userData.confirmPassword){
+                return toast.error("confirm password does not match")
+            }
+
+            if(!checkMail(userData.email)){
+                return toast.error("invalid email")
+            }
+
+            if(userData.password.length < 6){
+                return toast.error("password length must be 6 and above")
+            }
+
+            const data = await registerUser(userData)
             
-            registerUser(userData)
-            toast.success("hurray")
+           await dispatch(SET_LOGIN(true))
+           await dispatch(SET_NAME(data.name))
+            navigate('/dashboard')
+
+            setIsLoading(false)
+
         } 
     
 
   return (
     <Paper sx={{ padding:8 }} elevation={4}>
-        <ToastContainer />
+    <Spinner isLoading={isLoading} />
+        {isLoading && <h1 className='text-6xl text-green-500'>Loading...</h1>}
             <div className='flex flex-col justify-center items-center '>
 
             <Card  sx={{ maxWidth:"400px" }} >
@@ -42,12 +66,12 @@ const Register = () => {
                         
                         <FormControl sx={{ justifyContent:"center", width:300 }}>
 
-                            <TextField  label="Name" variant="outlined" name='name' value={userData.name} onChange={handleFormChange} />
+                            <TextField required  margin='dense' label="Name" variant="outlined" name='name' value={userData.name} onChange={handleFormChange} />
                             
-                            <TextField type="email" label="Email" variant="outlined" name='email' value={userData.email} onChange={handleFormChange} />
+                            <TextField required margin='normal' type="email" label="Email" variant="outlined" name='email' value={userData.email} onChange={handleFormChange} />
                         
-                            <Password text="Password" name='password' value={userData.password} onChange={handleFormChange} />
-                            <Password text="Confirm Password" name='confirmPassword' value={userData.confirmPassword} onChange={handleFormChange}  />
+                            <Password required id='outlined-required' text="Password" name='password' value={userData.password} onChange={handleFormChange} />
+                            <Password required id='outlined-required' text="Confirm Password" name='confirmPassword' value={userData.confirmPassword} onChange={handleFormChange}  />
 
                         </FormControl>
                         <Button type='submit' variant="outlined">Submit</Button>

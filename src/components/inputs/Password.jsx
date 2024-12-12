@@ -17,8 +17,9 @@ const Password = ({ text, name, onChange, value }) => {
 
     return (
         <FormControl sx={{ width: '100%' }} variant="outlined">
-            <InputLabel htmlFor={`outlined-adornment-${name}`}>{text}</InputLabel>
+            <InputLabel  htmlFor={`outlined-adornment-${name}`}>{text}</InputLabel>
             <OutlinedInput
+                sx={{ margin:1 }}
                 id={`outlined-adornment-${name}`}
                 type={showPassword ? 'text' : 'password'}
                 value={value}

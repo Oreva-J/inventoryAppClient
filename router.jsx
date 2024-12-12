@@ -14,16 +14,18 @@ import AdminMui from "./src/pages/admin/AdminMui";
 import Register from "./src/pages/authPages/Register";
 import Login from "./src/pages/authPages/Login";
 import ResetPassword from "./src/pages/authPages/ResetPassword";
+import Kanban from "./src/pages/productPages/Kanban";
 
 
 export const router = createBrowserRouter([
     {
         path: "dashboard/", 
         element: <DashboardLayout />, 
-        errorElement: <ErrorPage / >,
+        errorElement: <ErrorPage />,
         children: [
             {path: "", element: <Dashboard />},
-            {path: "profile", element: <Profile />}
+            {path: "profile", element: <Profile />},
+            {path: "kanban", element: <Kanban />},
            
         ]
     },
