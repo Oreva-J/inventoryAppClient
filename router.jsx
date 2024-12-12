@@ -15,6 +15,7 @@ import Register from "./src/pages/authPages/Register";
 import Login from "./src/pages/authPages/Login";
 import ResetPassword from "./src/pages/authPages/ResetPassword";
 import Kanban from "./src/pages/productPages/Kanban";
+import CreateProduct from "./src/pages/productPages/CreateProduct";
 
 
 export const router = createBrowserRouter([
@@ -26,6 +27,7 @@ export const router = createBrowserRouter([
             {path: "", element: <Dashboard />},
             {path: "profile", element: <Profile />},
             {path: "kanban", element: <Kanban />},
+            {path: "createProduct", element: <CreateProduct />}
            
         ]
     },

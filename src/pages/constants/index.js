@@ -50,9 +50,9 @@ export const links = [
     text: "Users",
   },
   {
-    href: "#",
+    href: "createProduct",
     icon: FaListAlt,
-    text: "Products",
+    text: "ADD Products",
   },
   {
     href: "/",
