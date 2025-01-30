@@ -125,8 +125,8 @@ const Section1 = () => {
             bottom: 0,
             left: 0,
             right: 0,
-            height: "800px",
-            top: `calc(${height}px - 13%)`,
+            height: "1200px",
+            top: `calc(${height}px - 34%)`,
           }}
         ></Box>
       </Box>
@@ -141,7 +141,7 @@ const Section1 = () => {
       >
         <Stack sx={{ height: "100%" }} justifyContent="center">
           <Title
-            variant={{ xs: "h3", sm: "h2", md: "h1" }}
+            variant={{ xs: "h5", sm: "h4", md: "h2" }}
             sx={{ letterSpacing: "0.02em", mb: 1 }}
             color="text.primary"
           >
@@ -149,7 +149,7 @@ const Section1 = () => {
           </Title>
 
           <Title
-            variant={{ xs: "h4", sm: "h3", md: "h2" }}
+            variant={{ xs: "h6", sm: "h5", md: "h4" }}
             sx={{ fontWeight: 500, letterSpacing: "0.05em", mb: 5 }}
             color="text.primary"
           >

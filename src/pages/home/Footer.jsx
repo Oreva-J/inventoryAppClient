@@ -21,10 +21,9 @@ const {
   socials,
 } = footerContent;
 
-const LinkSection = ({ title, links }) => (
+const LinkSection = React.memo(({ title, links }) => (
   <Stack spacing={2.5}>
     <Title>{title}</Title>
-
     {links.map(({ title }) => (
       <Typography
         key={title}
@@ -41,7 +40,7 @@ const LinkSection = ({ title, links }) => (
       </Typography>
     ))}
   </Stack>
-);
+));
 
 const Footer = () => {
   return (
@@ -49,10 +48,10 @@ const Footer = () => {
       <Divider sx={{ mb: 10 }} />
 
       <Container>
-        <Grid container spacing={8} flexWrap="wrap-reverse">
+        <Grid container spacing={{ xs: 4, sm: 6, md: 8 }} flexWrap="wrap-reverse">
           {/* Links */}
           <Grid item xs={12} md={6} lg={7} xl={8}>
-            <Grid container spacing={2}>
+            <Grid container spacing={{ xs: 2, sm: 3 }}>
               {/* Protocols */}
               <Grid item xs={6} sm={3} md={6} lg={4}>
                 <LinkSection {...protocols} />
@@ -72,7 +71,6 @@ const Footer = () => {
           <Grid item xs={12} md={6} lg={5} xl={4}>
             <Stack>
               <Title sx={{ mb: 1 }}>{subscribe.title}</Title>
-
               <Typography variant="body2" color="text.secondary">
                 {subscribe.subtitle}
               </Typography>
@@ -89,7 +87,10 @@ const Footer = () => {
                 flexWrap="wrap"
               >
                 {socials.map((item, i) => (
-                  <IconButton key={i}>
+                  <IconButton
+                    key={i}
+                    aria-label={`Follow us on ${item.title}`}
+                  >
                     <item.icon />
                   </IconButton>
                 ))}

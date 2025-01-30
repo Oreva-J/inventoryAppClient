@@ -1,5 +1,5 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Button, Card, CardActions, CardContent, CardHeader, FilledInput, FormControl, IconButton, InputAdornment, InputLabel, Paper, Skeleton, Stack, TextField, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, FilledInput, FormControl, IconButton, InputAdornment, InputLabel, Paper, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import Password from '../../components/inputs/Password';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { SET_LOGIN, SET_NAME, SET_USER } from '../../redux/features/auth/authSlice';
 import { useDispatch } from 'react-redux'
 import Spinner from '../../components/Spinner';
+import logo from '../../assets/StockPilot_noBg.png'
 
 
 const Register = () => {
@@ -58,6 +59,11 @@ const Register = () => {
             <div className='flex flex-col justify-center items-center '>
 
             <Card  sx={{ maxWidth:"400px" }} >
+                <CardMedia
+                    sx={{ height: 50 }}
+                    image={logo}
+                    title="Register"
+                />
                 <CardHeader 
                     title="Register"
                 />
@@ -66,11 +72,11 @@ const Register = () => {
                         
                         <FormControl sx={{ justifyContent:"center", width:300 }}>
 
-                            <TextField required  margin='dense' label="Name" variant="outlined" name='name' value={userData.name} onChange={handleFormChange} />
+                            <TextField required  margin='dense' label="Name" variant="standard" name='name' value={userData.name} onChange={handleFormChange} />
                             
-                            <TextField required margin='normal' type="email" label="Email" variant="outlined" name='email' value={userData.email} onChange={handleFormChange} />
+                            <TextField required margin='normal' type="email" label="Email" variant="standard" name='email' value={userData.email} onChange={handleFormChange} />
                         
-                            <Password required id='outlined-required' text="Password" name='password' value={userData.password} onChange={handleFormChange} />
+                            <Password type="standard" required id='standard-required' text="Password" name='password' value={userData.password} onChange={handleFormChange} />
                             <Password required id='outlined-required' text="Confirm Password" name='confirmPassword' value={userData.confirmPassword} onChange={handleFormChange}  />
 
                         </FormControl>
@@ -96,17 +102,3 @@ const Register = () => {
 }
 
 export default Register
-
-
-export const Sskeleton = ()=>{
-    return(
-    <Stack spacing={1}>
-      {/* For variant="text", adjust the height via font-size */}
-      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-      {/* For other variants, adjust the size with `width` and `height` */}
-      <Skeleton variant="circular" width={40} height={40} />
-      <Skeleton variant="rectangular" width={210} height={60} />
-      <Skeleton variant="rounded" width={210} height={60} />
-    </Stack>
-    )
-}

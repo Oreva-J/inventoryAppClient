@@ -1,90 +1,94 @@
-
-import { Button, Card, CardActions, CardContent, CardHeader, FilledInput, FormControl, IconButton, InputAdornment, InputLabel, Paper, Skeleton, Stack, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Button, Card, CardActions, CardContent, CardHeader, FormControl, TextField, Typography, Paper, Stack, Box, CardMedia } from '@mui/material';
+import React, { useState } from 'react';
 import Password from '../../components/inputs/Password';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from '../../redux/features/auth/authService';
 import { useDispatch } from 'react-redux';
 import { SET_LOGIN, SET_NAME } from '../../redux/features/auth/authSlice';
 import Spinner from '../../components/Spinner';
-
+import logo from '../../assets/StockPilot_noBg.png'
 
 const Login = () => {
-  const [userData, setUserData] = useState({email:"", password:""})
-  const [isLoading, setIsLoading] = useState(false)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleFormChange = (event)=>{
-    const {name, value} = event.target
-    setUserData({ ...userData, [name]:value})
-  }
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    if (name === 'email') setEmail(value);
+    if (name === 'password') setPassword(value);
+  };
 
-  const handleSubmit = async (e)=>{
-    e.preventDefault()
-    setIsLoading(true)
-    const data = await loginUser(userData)
-    //await dispatch(SET_LOGIN(true))
-    await dispatch(SET_NAME(data.name))
-    setIsLoading(false)
-    navigate('/dashboard')
-    
-  }
-    
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const data = await loginUser({ email, password });
+      dispatch(SET_NAME(data.name));
+      dispatch(SET_LOGIN(true));
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Login failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <Paper sx={{ padding:8, height:'100%' }} elevation={4}>
-        <Spinner isLoading={isLoading} />
-            <div className='flex flex-col justify-center items-center '>
-
-            <Card  sx={{ maxWidth:"400px" }} >
-                <CardHeader 
-                    title="Login"
+    <Paper sx={{ padding: 8, height: '100%' }} elevation={4}>
+      <Spinner isLoading={isLoading} />
+      <Box className="flex flex-col justify-center items-center">
+        <Card sx={{ maxWidth: '400px' }}>
+            <CardMedia
+                        sx={{ height: 50 }}
+                      image={logo}
+                      title="Login"
+                  />
+          <CardHeader title="Login" />
+          <CardContent>
+            <form onSubmit={handleSubmit}>
+              <Stack spacing={3}>
+                <TextField
+                  required
+                  type="email"
+                  label="Email"
+                  variant="outlined"
+                  name="email"
+                  value={email}
+                  onChange={handleFormChange}
                 />
-                <CardContent>
-                    <form onSubmit={handleSubmit} >
-                        
-                        <FormControl sx={{ justifyContent:"center", width:300 }}>
-
-                            <TextField required  type="email" label="Email" variant="outlined"
-                            name='email' value={userData.email} onChange={handleFormChange} />
-                            <Password required text="Password" 
-                            name='password' value={userData.password} onChange={handleFormChange} />
-
-                        </FormControl>
-                        <Button type='submit' variant="outlined">Submit</Button>
-
-                    </form>
-                </CardContent>
-                    <CardActions>
-                    <Link to="/">
-                            <Button size="small">Home</Button>
-                        </Link>
-                        <p>Don't have an account?</p>
-                        <Link to="/register">
-                            <Button size="small">Register</Button>
-                        </Link>
-                    </CardActions>
-            </Card>
-            </div>
-       
-      
+                <Password
+                  required
+                  text="Password"
+                  name="password"
+                  value={password}
+                  onChange={handleFormChange}
+                />
+                <div className="flex justify-between">
+                  <Button type="submit" variant="outlined" disabled={isLoading}>
+                    {isLoading ? 'Logging in...' : 'Submit'}
+                  </Button>
+                  <Link to="/forgotpassword">Forgot Password?</Link>
+                </div>
+              </Stack>
+            </form>
+          </CardContent>
+          <CardActions>
+            <Link to="/">
+              <Button size="small">Home</Button>
+            </Link>
+            <Typography variant="body2">Don't have an account?</Typography>
+            <Link to="/register">
+              <Button size="small">Register</Button>
+            </Link>
+          </CardActions>
+        </Card>
+      </Box>
     </Paper>
-  )
-}
+  );
+};
 
-export default Login
-
-
-export const Sskeleton = ()=>{
-    return(
-    <Stack spacing={1}>
-      {/* For variant="text", adjust the height via font-size */}
-      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-      {/* For other variants, adjust the size with `width` and `height` */}
-      <Skeleton variant="circular" width={40} height={40} />
-      <Skeleton variant="rectangular" width={210} height={60} />
-      <Skeleton variant="rounded" width={210} height={60} />
-    </Stack>
-    )
-}
+export default Login;

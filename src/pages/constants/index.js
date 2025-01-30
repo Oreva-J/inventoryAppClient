@@ -24,16 +24,16 @@ export const links = [
     icon: FaChartBar,
     text: "Dashboard",
   },
-  {
-    href: "kanban",
-    icon: FaCalendarAlt,
-    text: "Kanban",
-    badge: {
-      text: "Pro",
-      color: "bg-gray-100 text-gray-800",
-      darkColor: "dark:bg-gray-700 dark:text-gray-300",
-    },
-  },
+  // {
+  //   href: "kanban",
+  //   icon: FaCalendarAlt,
+  //   text: "Kanban",
+  //   badge: {
+  //     text: "Pro",
+  //     color: "bg-gray-100 text-gray-800",
+  //     darkColor: "dark:bg-gray-700 dark:text-gray-300",
+  //   },
+  // },
   {
     href: "profile",
     icon: FaFacebookMessenger,

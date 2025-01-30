@@ -21,7 +21,8 @@ const initialState = {
         name: "",
         email: "",
         bio: "",
-        photo: ""
+        photo: "",
+        phone: "",
     }
 }
 
@@ -44,6 +45,7 @@ const authSlice = createSlice({
             state.user.email = profile.email
             state.user.bio = profile.bio
             state.user.photo = profile.photo
+            state.user.phone = profile.phone
         }
     }
 })

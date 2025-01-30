@@ -11,8 +11,9 @@ const Home = () => {
   return (
     <div className=''>
       <Section1 />
-      <Section2 />
+      
       <Box sx={{ bgcolor: "background.default", position: "relative" }}>
+        <Section2 />
         <BventSection />
         <Section9 />
         <Section4 />

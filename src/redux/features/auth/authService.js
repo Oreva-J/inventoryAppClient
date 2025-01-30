@@ -14,7 +14,6 @@ export const registerUser = async (userData)=>{
         if(response.statusText === "OK"){
             toast.success("Registered Successfuly")
         }
-        console.log(response.data);
         
         return response.data
     } catch (error) {
@@ -44,6 +43,39 @@ export const loginUser = async (userData)=>{
     }
    
 }
+
+export const getUser = async ()=>{
+    try {
+        const response = await axios.get(`${Backend_url}getuser`, {withCredentials: true})
+        if (response.status === 200) {
+            return response.data; // Return the data if successful
+          } 
+
+    } catch (error) {
+        const message = 
+        (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        console.error("could not fetch User", message)
+        toast.error(message)
+    }
+}
+export const updateUser = async (editedData)=>{
+    try {
+        
+        const response = await axios.patch(`${Backend_url}updateuser`, editedData, {withCredentials: true})
+        if (response.status === 200) {
+            toast.success("updated")
+            return response.data; // Return the data if successful
+          } 
+
+    } catch (error) {
+        const message = 
+        (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        console.error("could not fetch User", message)
+        toast.error(message)
+    }
+}
+
+
 
 export const logoutUser = async  ()=>{
     try {
@@ -85,3 +117,26 @@ export const isUserLogin = async () => {
       return null; // Return null in case of an error
     }
   };
+
+//   Forgot Password
+
+export const forgotPassword = async (email)=>{
+    try {
+        console.log(email);
+        if(!email){
+            return toast.error("please enter Email Address")
+        }
+        await axios.post(`${Backend_url}/forgotpassword`, {email}, {withCredentials: true} )
+        toast.success("Success! Please cheack your mail")
+        
+    } catch (error) {
+        const message =
+        (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString();
+      
+      console.error('Something Went Wrong:', message);
+      toast.error(message); // Show the error message in a toast
+      return null; // Return null in case of an error
+    }
+}

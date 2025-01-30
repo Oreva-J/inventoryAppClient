@@ -1,5 +1,6 @@
 import React from 'react'
-import loader from "../assets/loader.gif"
+import loader from "../assets/Infinitysvg.svg"
+import miniLoader from "../assets/loader.gif"
 import ReactDom from "react-dom"
 
 const Spinner = ({ isLoading }) => {
@@ -20,8 +21,8 @@ const Spinner = ({ isLoading }) => {
 export const MiniSpinner = ({isLoading})=>{
     if(!isLoading) return null; 
     return(
-        <div className="flex justify-center items-center">
-            <img src={loader} alt="Loading..." />
+        <div className="flex justify-center items-center absolute top-0 bottom-0 right-0 left-0">
+            <img src={miniLoader} alt="Loading..." />
         </div>
     )
 }

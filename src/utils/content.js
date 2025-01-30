@@ -89,7 +89,7 @@ import user03 from "../assets/user03.png";
 
 
 // Navbar
-import Logo from "../assets/images/logo.svg";
+import Logo from "../assets/StockPilot_noBg.png";
 
 export const bventSection = { Items: {
     title: "Inventory & Stock Management Solution",
@@ -104,8 +104,8 @@ export const section1Content = {
   CliffImage,
   HorseImage,
   ShootingStarImage,
-  title: "Whole new access",
-  subtitle: "to Inventory Management System",
+  title: "Stock-Pilot. Track. Succeed.",
+  subtitle: "Pilot Your Stock to Success. ",
 };
 
 export const section2Content = {
