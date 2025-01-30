@@ -1,7 +1,9 @@
 import axios from "axios"
 
 // const product_url = import.meta.env.VITE_API_URL
-const url = "http://localhost:3333/api"
+// const url = "http://localhost:3333/api"
+const url = import.meta.env.VITE_API_URL
+
 
 // Create Product
 

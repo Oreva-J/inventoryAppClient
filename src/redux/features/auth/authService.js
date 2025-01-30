@@ -1,7 +1,9 @@
 import axios from "axios"
 import { toast } from "react-toastify"
 
-const Backend_url = "http://localhost:3333/api/users/"
+// const Backend_url = "http://localhost:3333/api/users/"
+
+const Backend_url = `${import.meta.env.VITE_API_URL}/users/`
 
 export const checkMail = (email)=>{
     return email.match(/^((([!#$%&'*+\-/=?^_`{|}~\w])|([!#$%&'*+\-/=?^_`{|}~\w][!#$%&'*+\-/=?^_`{|}~\.\w]{0,}[!#$%&'*+\-/=?^_`{|}~\w]))[@]\w+([-.]\w+)*\.\w+([-.]\w+)*)$/)
